@@ -115,3 +115,79 @@ describe('POST /api/get-rating', () => {
     expect(res.body.error).toEqual('Input text must be 250 characters or less');
   });
 });
+describe('POST /api/get-quote', () => {
+  it('returns yearly and monthly ', async () => {
+    const res = await request(app)
+      .post('/api/get-quote')
+      .send({
+        value: 9713,
+        rating: 2,
+      })
+      .set('Content-Type', 'application/json')
+      .expect(200);
+
+    expect(res.body).toEqual({
+      quote: {
+        yearly: 194.26,
+        monthly: 16.19,
+      },
+    });
+  });
+
+  it('returns only 2 decimals ', async () => {
+    const res = await request(app)
+      .post('/api/get-quote')
+      .send({
+        value: 9713,
+        rating: 3,
+      })
+      .set('Content-Type', 'application/json')
+      .expect(200);
+
+    expect(res.body).toEqual({
+      quote: {
+        monthly: 24.28,
+        yearly: 291.39,
+      },
+    });
+  });
+
+  it('returns error if no valid input', async () => {
+    const res = await request(app)
+      .post('/api/get-quote')
+      .send({
+        value: '',
+        rating: 2,
+      })
+      .set('Content-Type', 'application/json')
+      .expect(400);
+
+    expect(res.body.error).toEqual('value and rating needed');
+  });
+
+  it('returns error if rating is higher than 5', async () => {
+    const res = await request(app)
+      .post('/api/get-quote')
+      .send({
+        value: 9713,
+        rating: 6,
+      })
+      .set('Content-Type', 'application/json')
+      .expect(400);
+
+    expect(res.body.error).toEqual('rating too high');
+  });
+
+  it('returns error if value is not a number', async () => {
+    const res = await request(app)
+      .post('/api/get-quote')
+      .send({
+        value: 'hello',
+        rating: 2,
+      })
+      .set('Content-Type', 'application/json')
+      .expect(400);
+
+    expect(res.body.error).toEqual('value must be a number');
+  });
+});
