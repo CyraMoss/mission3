@@ -1,4 +1,6 @@
 const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+const date = new Date();
+let year = date.getFullYear();
 
 function convertToNumbers(carmodel) {
   let encrypted = 0;

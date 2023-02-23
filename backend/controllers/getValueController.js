@@ -1,4 +1,5 @@
-const carModel = require('../models/valueModel');
+const { convertToNumbers, validateYear } = require('../models/valueModel');
+
 const date = new Date();
 let year = date.getFullYear();
 
@@ -7,10 +8,10 @@ function valueController(req, res) {
 
   try {
     // Convert the string to numbers using the A1Z26 cipher
-    let encrypted = carModel.convertToNumbers(carmodel);
+    let encrypted = convertToNumbers(carmodel);
 
     // Check if car year is valid
-    if (!carModel.validateYear(caryear, year)) {
+    if (!validateYear(caryear, year)) {
       res.status(400).send('Invalid vehicle year!');
       return;
     }

@@ -1,10 +1,27 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const valueRoute = require('./routes/valueRoute');
+const carValueRoute = require('./routes/carValueRoute');
 const riskRoute = require('./routes/riskRoute');
 const quoteRoute = require('./routes/quoteRoute');
 const env = require('dotenv');
 env.config();
+const mongoose = require('mongoose');
+
+mongoose
+  .connect(
+    'mongodb+srv://kyraagrace:1vFmoGVbBDAoHdl0@cluster0.mkxui.mongodb.net/?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB', err);
+  });
 
 const app = express();
 const PORT = process.env.PORT || 3002;
