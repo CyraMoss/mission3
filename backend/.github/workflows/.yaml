@@ -14,9 +14,11 @@ jobs:
           node-version: '14.x'
       - name: Install dependencies
         run: npm install
+      - name: Run unit tests
+        run: npm test
       - name: Build and deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: mission4
-          heroku_email: 'cyramoss@icloud.com
+          heroku_email: 'cyramoss@icloud.com'
