@@ -1,28 +1,30 @@
-const express = require('express');
-const router = express.Router();
-const CarValue = require('../models/carValueModel');
-const { validateYear, convertToNumbers } = require('../models/valueModel');
-const getValueController = require('../controllers/getValueController');
+const { convertToNumbers, validateYear } = require('../models/valueModel');
 
-router.post('/', async (req, res) => {
+const date = new Date();
+let year = date.getFullYear();
+
+function valueController(req, res) {
+  let { carmodel, caryear } = req.body;
+
   try {
-    const carModel = req.body.carmodel;
-    const carYear = req.body.caryear;
-    const currentYear = new Date().getFullYear();
-    validateYear(carYear, currentYear);
-    const addValue = convertToNumbers(carModel) * 100 + carYear;
-    const carValue = addValue;
-    const newCarValue = new CarValue({
-      carModel,
-      carYear,
-      carValue,
-    });
-    await newCarValue.save();
-    res.json({ carvalue: carValue });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
-  }
-});
+    // Convert the string to numbers using the A1Z26 cipher
+    let encrypted = convertToNumbers(carmodel);
 
-module.exports = router;
+    // Check if car year is valid
+    if (!validateYear(caryear, year)) {
+      console.log(caryear, year)
+      res.status(400).send('Invalid vehicle year!');
+      return;
+    }
+
+    const result = encrypted * 100 + caryear;
+    const response = { result };
+
+    res.json(response);
+  } catch (err) {
+    console.error('Error processing request:', err);
+    res.status(400).send('Error processing request');
+  }
+}
+
+module.exports = valueController;

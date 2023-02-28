@@ -12,6 +12,7 @@ function valueController(req, res) {
 
     // Check if car year is valid
     if (!validateYear(caryear, year)) {
+      console.log(caryear, year)
       res.status(400).send('Invalid vehicle year!');
       return;
     }
