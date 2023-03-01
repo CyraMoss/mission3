@@ -7,6 +7,7 @@ const quoteRoute = require('./routes/quoteRoute');
 const env = require('dotenv');
 env.config();
 const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
 
 async function connectToDB() {
   try {

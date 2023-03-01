@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const { connectToDB, server } = require('./server');
 const app = server;
 
+afterAll((done) => {
+  app.close(done);
+});
+
 test('connects to MongoDB', async () => {
   await connectToDB();
   expect(mongoose.connection.readyState).toBe(1);
@@ -37,7 +41,7 @@ describe('POST /api/get-value', () => {
       .set('Accept', 'application/json')
       .expect(400);
 
-    expect(res.text).toEqual('Error processing request');
+    expect(res.text).toEqual('Invalid car model!');
   });
 
   it('returns 400 for invalid vehile year', async () => {
@@ -47,7 +51,7 @@ describe('POST /api/get-value', () => {
       .set('Accept', 'application/json')
       .expect(400);
 
-    expect(res.text).toEqual('Error processing request');
+    expect(res.text).toEqual('Invalid vehicle year!');
   });
   it('returns 400 for vehile year being too high', async () => {
     const res = await request(app)
@@ -56,7 +60,7 @@ describe('POST /api/get-value', () => {
       .set('Accept', 'application/json')
       .expect(400);
 
-    expect(res.text).toEqual('Error processing request');
+    expect(res.text).toEqual('Invalid vehicle year!');
   });
 });
 

@@ -5,6 +5,15 @@ let year = date.getFullYear();
 
 function valueController(req, res) {
   let { carmodel, caryear } = req.body;
+  if (!carmodel || typeof carmodel !== 'string') {
+    res.status(400).send('Invalid car model!');
+    return;
+  }
+  caryear = parseInt(caryear);
+  if (isNaN(caryear) || caryear < 1900 || caryear > year) {
+    res.status(400).send('Invalid vehicle year!');
+    return;
+  }
 
   try {
     // Convert the string to numbers using the A1Z26 cipher
