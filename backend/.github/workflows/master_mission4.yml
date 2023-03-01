@@ -21,8 +21,10 @@ jobs:
         with:
           node-version: '16.x'
 
+      - name: Change directory to backend
+        run: cd mission3/backend
+
       - name: npm install, build, and test
-      working-directory: ./mission3/backend
         run: |
           npm install
           npm run build --if-present
