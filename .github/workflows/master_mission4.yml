@@ -22,11 +22,10 @@ jobs:
           node-version: '16.x'
 
       - name: Change directory to backend
-        run: cd backend
+        run: cd backend && npm install
 
       - name: npm install, build, and test
         run: |
-          npm install
           npm run build --if-present
           npm run test --if-present
 
