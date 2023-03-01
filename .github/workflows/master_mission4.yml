@@ -22,7 +22,7 @@ jobs:
           node-version: '16.x'
 
       - name: Change directory to backend
-        run: cd mission3/backend
+        run: cd backend
 
       - name: npm install, build, and test
         run: |
