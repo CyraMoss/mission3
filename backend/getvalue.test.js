@@ -1,11 +1,19 @@
 const request = require('supertest');
-const app = require('./server');
+const mongoose = require('mongoose');
+
+const { connectToDB, server } = require('./server');
+const app = server;
+
+test('connects to MongoDB', async () => {
+  await connectToDB();
+  expect(mongoose.connection.readyState).toBe(1);
+});
 
 describe('POST /api/get-value', () => {
   it('returns the correct result for valid input', async () => {
     const res = await request(app)
       .post('/api/get-value')
-      .send({ carmodel: 'Swift', caryear: 2013 })
+      .send({ carmodel: 'swift', caryear: 2013 })
       .set('Content-Type', 'application/json')
       .expect(200);
 
@@ -102,7 +110,7 @@ describe('POST /api/get-rating', () => {
     expect(res.body.error).toEqual('Input text is required');
   });
 
-  it('returns error if no input ', async () => {
+  it('returns error if input too long ', async () => {
     const res = await request(app)
       .post('/api/get-rating')
       .send({

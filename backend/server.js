@@ -8,20 +8,20 @@ const env = require('dotenv');
 env.config();
 const mongoose = require('mongoose');
 
-mongoose
-  .connect(
-    'mongodb+srv://kyraagrace:1vFmoGVbBDAoHdl0@cluster0.mkxui.mongodb.net/?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
-  .then(() => {
+async function connectToDB() {
+  try {
+    await mongoose.connect(
+      'mongodb+srv://kyraagrace:1vFmoGVbBDAoHdl0@cluster0.mkxui.mongodb.net/?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
     console.log('Connected to MongoDB');
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error('Error connecting to MongoDB', err);
-  });
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -47,4 +47,4 @@ const server = app.listen(PORT, () => {
   console.log(`Server running on port`, PORT);
 });
 
-module.exports = server;
+module.exports = { connectToDB, server };

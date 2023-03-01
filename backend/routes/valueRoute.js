@@ -9,10 +9,9 @@ function valueController(req, res) {
   try {
     // Convert the string to numbers using the A1Z26 cipher
     let encrypted = convertToNumbers(carmodel);
-
     // Check if car year is valid
     if (!validateYear(caryear, year)) {
-      console.log(caryear, year)
+      console.log(caryear, year);
       res.status(400).send('Invalid vehicle year!');
       return;
     }

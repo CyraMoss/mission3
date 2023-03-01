@@ -4,11 +4,12 @@ let year = date.getFullYear();
 
 function convertToNumbers(carmodel) {
   let encrypted = 0;
-  carmodel = carmodel.toLowerCase();
+  if (carmodel === 'string') {
+    carmodel = carmodel.toLowerCase();
+  }
 
   // Check if car model is a string
   if (typeof carmodel !== 'string') {
-    console.log(carmodel)
     throw new Error('Invalid carmodel');
   }
 
@@ -16,7 +17,6 @@ function convertToNumbers(carmodel) {
     for (let i = 0; i < alphabet.length; i++) {
       if (alphabet[i] === carmodel[j]) {
         encrypted += i + 1;
-        console.log(encrypted)
       }
     }
   }
