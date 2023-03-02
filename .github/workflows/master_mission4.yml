@@ -26,7 +26,6 @@ jobs:
           cd backend
           npm install
           npm test
-          npm start
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
