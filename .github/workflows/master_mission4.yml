@@ -21,17 +21,16 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: npm build
-        run: |
-          cd backend
-          npm run build
-
-      - name: npm install and test
+      - name: npm install and run
         run: |
           cd backend
           npm install
-          npm run build
-          npm run test
+          npm run build --if-present
+
+      - name: run tests
+        run: |
+          cd backend
+          npm run test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
