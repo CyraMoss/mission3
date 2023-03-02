@@ -4,13 +4,13 @@ const mongoose = require('mongoose');
 const { connectToDB, server } = require('./server');
 const app = server;
 
-afterAll((done) => {
-  app.close(done);
+beforeAll(async () => {
+  await connectToDB();
 });
 
-test('connects to MongoDB', async () => {
-  await connectToDB();
-  expect(mongoose.connection.readyState).toBe(1);
+afterAll(async () => {
+  await mongoose.connection.close();
+  app.close();
 });
 
 describe('POST /api/get-value', () => {
