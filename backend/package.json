@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles",
     "start": "node server.js",
-    "build": "node server.js"
+    "build": "npm install && npm run test"
   },
   "keywords": [],
   "author": "",
