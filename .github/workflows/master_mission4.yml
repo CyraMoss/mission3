@@ -21,10 +21,15 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: npm install, build, and test
+      - name: npm install
         run: |
           cd backend
           npm install
+
+      - name: npm test
+        run: |
+          cd backend
+          npm test --exit
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
