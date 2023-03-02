@@ -25,11 +25,7 @@ jobs:
         run: |
           cd backend
           npm install
-
-      - name: npm test
-        run: |
-          cd backend
-          npm test --exit
+          npm test -- --silent --no-watch
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
